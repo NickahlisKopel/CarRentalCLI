@@ -1,5 +1,6 @@
 package com.careerdevs;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class RentalService {
@@ -45,7 +46,16 @@ public class RentalService {
             System.out.println("Thank you! You are now renting the " + garage[selection-1].getName());
 
             if (x == garage.length){
-                done = true;
+                System.out.print("end or reset:");
+                String answer = scanner.nextLine();
+                if(Objects.equals(answer, "reset")){
+                    x = 0;
+                    car1.setRented(false);
+                    car2.setRented(false);
+                    car3.setRented(false);
+                }else{
+                    done = true;
+                }
             }
 
         }
