@@ -1,14 +1,32 @@
 package com.careerdevs;
 
 public class Car {
-    String make;
-    String model;
-    boolean isRented;
+    private String make;
+    private String model;
+    private boolean isRented;
 
     public Car(String make, String model, boolean isRented) {
         this.make = make;
         this.model = model;
         this.isRented = isRented;
+    }
+    public String getName(){
+        return make + " " + model;
+    }
+    public String getMake() {
+        return make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean rented) {
+        isRented = rented;
     }
 
     @Override
