@@ -2,9 +2,6 @@ package com.careerdevs;
 
 import com.careerdevs.ui.CLI;
 
-import java.util.Objects;
-import java.util.Scanner;
-
 public class RentalService {
     static Car car1 = new Car("Honda","Accord",false, "company");
     static Car car2 = new Car("Chevy","Cruze",false,"company");
