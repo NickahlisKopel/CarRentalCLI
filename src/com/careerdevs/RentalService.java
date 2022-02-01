@@ -1,63 +1,97 @@
 package com.careerdevs;
 
+import com.careerdevs.ui.CLI;
+
 import java.util.Objects;
 import java.util.Scanner;
 
 public class RentalService {
-
+    static Car car1 = new Car("Honda","Accord",false, "company");
+    static Car car2 = new Car("Chevy","Cruze",false,"company");
+    static Car car3 = new Car("Toyota","Corolla",false,"company");
+    public static Car[] garage = {car1,car2,car3};
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        boolean done = false;
-        int x = 0;
-        Car car1 = new Car("Honda","Accord",false);
-        Car car2 = new Car("Chevy","Cruze",false);
-        Car car3 = new Car("Toyota","Corolla",false);
-        Car[] garage = {car1,car2,car3};
+
         System.out.println("Welcome to the Car Rental CLI");
-        while (!done){
-            System.out.println("Available Cars:");
-            for(int i = 0; i < garage.length;i++){
-                if(!garage[i].isRented()){
-                    System.out.println((i + 1)+ ")" + garage[i].getName());
-                }else{
-                    x++;
-                }
+        mainMenu();
+    }
 
+    public static void mainMenu(){
+        int x = 0;
+        for(int i = 0; i < garage.length;i++){
+            if(!garage[i].isRented()){
+                x++;
             }
-            System.out.println("Enter a number to select the car you'd like to rent");
-            System.out.print("Selection: ");
-            int selection = scanner.nextInt();
-            scanner.nextLine();
-            while(selection > garage.length){
-                System.out.println("Car selection invalid, please try again");
-                System.out.print("Selection: ");
-                selection = scanner.nextInt();
-                scanner.nextLine();
+        }
+        int selection = CLI.readInt("Would you like to:\n1)Rent("+x+" Cars Available)\n2)Return("+(garage.length - x)+" Cars Available)\nSelection",1,2);
+        if(selection == 1 && x == 0){
+            System.out.println("Not Available");
+            mainMenu();
+        }else if (selection == 2 && garage.length - x == 0){
+            System.out.println("Not Available");
+            mainMenu();
+        }else if(selection == 1){
+            rentCar();
+
+        }else{
+            returnCar();
+        }
+    }
+
+    public static void rentCar(){
+        System.out.println("Available Cars:");
+        for(int i = 0; i < garage.length;i++){
+            if(!garage[i].isRented()){
+                System.out.println((i + 1)+ ")" + garage[i].getName());
             }
-            while(garage[selection-1].isRented()){
-                System.out.println("Car selection invalid, please try again");
-                System.out.print("Selection: ");
-                selection = scanner.nextInt();
-                scanner.nextLine();
+        }
+        int selection = CLI.readInt("What car would you like to rent?",1,garage.length);
+        String confirm  = CLI.readString("Are you sure you want to rent The "+garage[selection-1].getName()+"?\nConfirm y/n");
+        if(confirm.equals("n") || confirm.equals("no") || confirm.equals("N") || confirm.equals("NO") || confirm.equals("No")){
+            rentCar();
+        }
+        String name = CLI.readString("What is the name you would like to use to return your rental?\nEnter Name");
+        garage[selection-1].setRenterName(name);
+        garage[selection-1].setRented(true);
+        mainMenu();
+
+
+    }
+
+    public static void returnCar(){
+        System.out.println("Available Cars:");
+        int x = 0;
+        for(int i = 0; i < garage.length;i++){
+            if(garage[i].isRented()){
+                x++;
+                System.out.println((i + 1)+ ")" + garage[i].getName());
+            }else{
+                x++;
             }
+        }
+        int selection = CLI.readInt("What Car are you returning?",1,x);
 
-            garage[selection -1].setRented(true);
+        if(!garage[selection-1].isRented()){
+            System.out.println("Car Not Available");
+            returnCar();
+        }
 
-            System.out.println("Thank you! You are now renting the " + garage[selection-1].getName());
+        String name = CLI.readString("Enter the name you used to rent The "+garage[selection-1].getName()+"\nEnter Name");
 
-            if (x == garage.length){
-                System.out.print("end or reset:");
-                String answer = scanner.nextLine();
-                if(Objects.equals(answer, "reset")){
-                    x = 0;
-                    car1.setRented(false);
-                    car2.setRented(false);
-                    car3.setRented(false);
-                }else{
-                    done = true;
-                }
+        if(garage[selection-1].getRenterName().equals(name)){
+            garage[selection-1].setRented(false);
+            garage[selection-1].setRenterName("company");
+            System.out.println("Thank you for returning the car.");
+        }else{
+            int again = CLI.readInt("Wrong name, would you like to 1) try again or 2) return to Main Menu?",1,2);
+            if (again == 1){
+                returnCar();
+            }else{
+                mainMenu();
             }
 
         }
+        mainMenu();
     }
+
 }
