@@ -36,13 +36,19 @@ public class RentalService {
     }
 
     public static void rentCar(){
+        int x = 0;
         System.out.println("Available Cars:");
         for(int i = 0; i < garage.length;i++){
             if(!garage[i].isRented()){
+                x++;
                 System.out.println((i + 1)+ ")" + garage[i].getName());
             }
         }
-        int selection = CLI.readInt("What car would you like to rent?",1,garage.length);
+        System.out.println(x+1+")" + "Return to Main Menu");
+        int selection = CLI.readInt("What car would you like to rent?",1,garage.length + 1);
+        if(selection == x+1){
+            mainMenu();
+        }
         String confirm  = CLI.readString("Are you sure you want to rent The "+garage[selection-1].getName()+"?\nConfirm y/n");
         if(confirm.equals("n") || confirm.equals("no") || confirm.equals("N") || confirm.equals("NO") || confirm.equals("No")){
             rentCar();
@@ -65,9 +71,13 @@ public class RentalService {
             }else{
                 x++;
             }
-        }
-        int selection = CLI.readInt("What Car are you returning?",1,x);
 
+        }
+        System.out.println((x+1)+")"+"Return to Main Menu");
+        int selection = CLI.readInt("What Car are you returning?",1,x+1);
+        if(selection == x + 1){
+            mainMenu();
+        }
         if(!garage[selection-1].isRented()){
             System.out.println("Car Not Available");
             returnCar();
@@ -80,7 +90,7 @@ public class RentalService {
             garage[selection-1].setRenterName("company");
             System.out.println("Thank you for returning the car.");
         }else{
-            int again = CLI.readInt("Wrong name, would you like to 1) try again or 2) return to Main Menu?",1,2);
+            int again = CLI.readInt("Wrong name, would you like to\n1) try again\n2) return to Main Menu\nSelection",1,2);
             if (again == 1){
                 returnCar();
             }else{
