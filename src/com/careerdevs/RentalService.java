@@ -13,7 +13,7 @@ public class RentalService {
         mainMenu();
     }
 
-    public static void mainMenu(){
+    private static void mainMenu(){
         int x = 0;
         for(int i = 0; i < garage.length;i++){
             if(!garage[i].isRented()){
@@ -37,7 +37,7 @@ public class RentalService {
         }
     }
 
-    public static void rentCar(){
+    private static void rentCar(){
         int x = 0;
         System.out.println("Available Cars:");
         for(int i = 0; i < garage.length;i++){
@@ -63,7 +63,7 @@ public class RentalService {
 
     }
 
-    public static void returnCar(){
+    private static void returnCar(){
         System.out.println("Available Cars:");
         int x = 0;
         for(int i = 0; i < garage.length;i++){
