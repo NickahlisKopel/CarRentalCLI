@@ -20,7 +20,7 @@ public class RentalService {
                 x++;
             }
         }
-        int selection = CLI.readInt("Would you like to:\n1)Rent("+x+" Cars Available)\n2)Return("+(garage.length - x)+" Cars Available)\nSelection",1,2);
+        int selection = CLI.readInt("Would you like to:\n1)Rent("+x+" Cars Available)\n2)Return("+(garage.length - x)+" Cars Available)\n3)Exit\nSelection",1,3);
         if(selection == 1 && x == 0){
             System.out.println("Not Available");
             mainMenu();
@@ -30,8 +30,10 @@ public class RentalService {
         }else if(selection == 1){
             rentCar();
 
-        }else{
+        }else if (selection == 2){
             returnCar();
+        }else{
+            return;
         }
     }
 
