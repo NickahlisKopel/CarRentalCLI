@@ -80,27 +80,36 @@ public class RentalService {
         if(selection == x + 1){
             mainMenu();
         }
-        if(!garage[selection-1].isRented()){
-            System.out.println("Car Not Available");
-            returnCar();
-        }
 
-        String name = CLI.readString("Enter the name you used to rent The "+garage[selection-1].getName()+"\nEnter Name");
-
-        if(garage[selection-1].getRenterName().equals(name)){
-            garage[selection-1].setRented(false);
-            garage[selection-1].setRenterName("company");
-            System.out.println("Thank you for returning the car.");
-        }else{
-            int again = CLI.readInt("Wrong name, would you like to\n1) try again\n2) return to Main Menu\nSelection",1,2);
-            if (again == 1){
+        try {
+            if(!garage[selection-1].isRented()){
+                System.out.println("Car Not Available");
                 returnCar();
-            }else{
-                mainMenu();
             }
 
+            String name = CLI.readString("Enter the name you used to rent The "+garage[selection-1].getName()+"\nEnter Name");
+
+            if(garage[selection-1].getRenterName().equals(name)){
+                garage[selection-1].setRented(false);
+                garage[selection-1].setRenterName("company");
+                System.out.println("Thank you for returning the car.");
+            }else{
+                int again = CLI.readInt("Wrong name, would you like to\n1) try again\n2) return to Main Menu\nSelection",1,2);
+                if (again == 1){
+                    returnCar();
+                }else{
+                    mainMenu();
+                }
+
+            }
+            mainMenu();
+
+        }catch (ArrayIndexOutOfBoundsException e){
+
         }
-        mainMenu();
+
+
+
     }
 
 }
