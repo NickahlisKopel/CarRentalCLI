@@ -44,21 +44,28 @@ public class RentalService {
             if(!garage[i].isRented()){
                 x++;
                 System.out.println((i + 1)+ ")" + garage[i].getName());
+            }else{
+                x++;
             }
         }
         System.out.println(x+1+")" + "Return to Main Menu");
-        int selection = CLI.readInt("What car would you like to rent?",1,garage.length + 1);
-        if(selection == x+1){
+        try{
+            int selection = CLI.readInt("What car would you like to rent?",1,garage.length + 1);
+            if(selection == x+1){
+                mainMenu();
+            }
+            String confirm  = CLI.readString("Are you sure you want to rent The "+garage[selection-1].getName()+"?\nConfirm y/n");
+            if(confirm.equals("n") || confirm.equals("no") || confirm.equals("N") || confirm.equals("NO") || confirm.equals("No")){
+                rentCar();
+            }
+            String name = CLI.readString("What is the name you would like to use to return your rental?\nEnter Name");
+            garage[selection-1].setRenterName(name);
+            garage[selection-1].setRented(true);
             mainMenu();
+        }catch(ArrayIndexOutOfBoundsException e){
+
         }
-        String confirm  = CLI.readString("Are you sure you want to rent The "+garage[selection-1].getName()+"?\nConfirm y/n");
-        if(confirm.equals("n") || confirm.equals("no") || confirm.equals("N") || confirm.equals("NO") || confirm.equals("No")){
-            rentCar();
-        }
-        String name = CLI.readString("What is the name you would like to use to return your rental?\nEnter Name");
-        garage[selection-1].setRenterName(name);
-        garage[selection-1].setRented(true);
-        mainMenu();
+
 
 
     }
