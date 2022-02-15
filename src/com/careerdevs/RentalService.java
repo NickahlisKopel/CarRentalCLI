@@ -83,12 +83,13 @@ public class RentalService {
 
         }
         System.out.println((x+1)+")"+"Return to Main Menu");
+        try {
         int selection = CLI.readInt("What Car are you returning?",1,x+1);
         if(selection == x + 1){
             mainMenu();
         }
 
-        try {
+
             if(!garage[selection-1].isRented()){
                 System.out.println("Car Not Available");
                 returnCar();
@@ -106,6 +107,7 @@ public class RentalService {
                     returnCar();
                 }else{
                     mainMenu();
+                    return;
                 }
 
             }
